@@ -37,7 +37,8 @@ def listen_option():
 
 
 def save_task():
-    try:
+    selection = ''
+    while(selection == ''):
         talk("Dime el nombre de la tarea")
         print("Escuchando ahora...")
         with sr.Microphone() as source:
@@ -67,11 +68,11 @@ def save_task():
                 print("La tarea " + selection + " ha sido guardada con exito")
                 talk("La tarea " + selection + " ha sido guardada con exito")
             else:
+                selection = ''
                 print("Esta tarea ya existe, mencione otra")
                 talk("Esta tarea ya existe, mencione otra")
 
-    except:
-        pass
+    
     return selection
 
 
@@ -149,6 +150,11 @@ def run_date():
     date = datetime.today().strftime('%Y-%m-%d')
     talk(date)
     print(date)
+
+def run_current_time():
+    current_time = time.strftime('%H:%M:%S', time.localtime())
+    talk(current_time)
+    print(current_time)
 
 
 def update_task():
@@ -237,6 +243,12 @@ def run_options():
             print("Has seleccionado " + option)
             talk("Has seleccionado " + option)
             run_date()
+            option = listen_option()
+        if 'dime la hora' in option:
+            option = option.replace('dime la hora', 'conocer la hora')
+            print("Has seleccionado " + option)
+            talk("Has seleccionado " + option)
+            run_current_time()
             option = listen_option()
         if "nada más" in option:
             print("Espero haberte ayudado mucho, hasta pronto")
